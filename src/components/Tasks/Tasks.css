@@ -1,0 +1,8 @@
+.task-container{
+    display: flex;
+    flex-direction: column;
+}
+.task-item{
+    border:3px solid black;
+    width: 100px;
+}
