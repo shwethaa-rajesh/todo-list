@@ -17,6 +17,7 @@ const Tasks=(props)=>{
     });
     return(
         <div className='list'>
+            <h1>{props.tasks.name}</h1>
     <div className="task-container">
             {TaskItems}
             <hr/>

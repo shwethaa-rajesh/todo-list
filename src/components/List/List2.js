@@ -59,9 +59,9 @@ function App() {
    }
   return (
    <div className='app-container'>
-     
+     <h1>fy</h1>
      {
-       (currentPage==='lists')? <Tasks tasks={taskItems} onClickEdit={onClickEdit} setPage={setPage}/>:<CreateTask onCreateList={saveNewListData} onEditList={editNewListData} taskFunction={taskFunction}  task={editTask}></CreateTask>
+       <Tasks tasks={taskItems} onClickEdit={onClickEdit} setPage={setPage}/>
 
      }
     

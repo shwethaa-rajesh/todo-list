@@ -24,7 +24,7 @@ const CreateTask=(props)=>{
         }
       
         else{
-            props.onCreateList(newTask,props.listId)
+            props.onCreateTask(newTask,props.listId)
             setEnteredTask("");
         }
        // console.log(newTask)

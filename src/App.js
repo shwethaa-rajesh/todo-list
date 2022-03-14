@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import CreateTask from './components/CreateTask/CreateTask'
+import CreateList from './components/CreateList/CreateList'
 import Tasks from './components/Tasks/Tasks'
 import List from './components/List/List'
 import {useState} from 'react';
@@ -54,6 +55,23 @@ function App() {
     setPage('lists');
     //console.log(newLists);
    };
+
+   const addNewList = (newListData,listId) => {
+    // console.log('Task items',taskItems)
+    // console.log('new list data',newListData)
+    // console.log('all lists',listsData);
+    // console.log('current list',currentList)
+    const newList = {...newListData};
+    newList.key = listsData.length+1;
+    console.log("New ",newList);
+    const updatedList=[...listsData,newList]
+    console.log('New list ', newList)
+   setTaskItems(newList);
+   setList(updatedList);
+   setPage('view-lists');
+   //console.log(newLists);
+  };
+
 
    const editNewListData=(newListData,listId)=>{
       console.log(listsData,'before edit');
@@ -136,9 +154,14 @@ function App() {
  return(
   <div className='app-container'>
 {
+  // (currentPage==='view-lists')? <List lists={listsData} onClickList={onClickList} setPage={setPage}/>
+  // : ((currentPage==='lists')? <Tasks tasks={taskItems} listId={currentList.key} onClickEdit={onClickEdit} setEditTask={setEditTask} setPage={setPage} onCreateList={addNewList}/>
+  // : <CreateTask onCreateTask={saveNewListData} onEditList={editNewListData} taskFunction={taskFunction} listId={currentList.key} task={editTask}></CreateTask> )
+  
   (currentPage==='view-lists')? <List lists={listsData} onClickList={onClickList} setPage={setPage}/>
-  : ((currentPage==='lists')? <Tasks tasks={taskItems} listId={currentList.key} onClickEdit={onClickEdit} setEditTask={setEditTask} setPage={setPage}/>
-  : <CreateTask onCreateList={saveNewListData} onEditList={editNewListData} taskFunction={taskFunction} listId={currentList.key} task={editTask}></CreateTask> )
+  : ((currentPage==='lists')? <Tasks tasks={taskItems} listId={currentList.key} onClickEdit={onClickEdit} setEditTask={setEditTask} setPage={setPage} onCreateList={addNewList}/>
+  :( (currentPage==='add-list')?<CreateList onCreateList={addNewList}></CreateList>:<CreateTask onCreateTask={saveNewListData} onEditList={editNewListData} taskFunction={taskFunction} listId={currentList.key} task={editTask}></CreateTask> )
+  )
   
   
   
