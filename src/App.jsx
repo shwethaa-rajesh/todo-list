@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import CreateTask from './components/CreateTask/CreateTask'
 import CreateList from './components/CreateList/CreateList'
@@ -152,7 +151,7 @@ function App() {
   );
   */
  return(
-  <div className='app-container'>
+    <div className='app-container'>
 {
   // (currentPage==='view-lists')? <List lists={listsData} onClickList={onClickList} setPage={setPage}/>
   // : ((currentPage==='lists')? <Tasks tasks={taskItems} listId={currentList.key} onClickEdit={onClickEdit} setEditTask={setEditTask} setPage={setPage} onCreateList={addNewList}/>
@@ -160,7 +159,7 @@ function App() {
   
   (currentPage==='view-lists')? <List lists={listsData} onClickList={onClickList} setPage={setPage}/>
   : ((currentPage==='lists')? <Tasks tasks={taskItems} listId={currentList.key} onClickEdit={onClickEdit} setEditTask={setEditTask} setPage={setPage} onCreateList={addNewList}/>
-  :( (currentPage==='add-list')?<CreateList onCreateList={addNewList}></CreateList>:<CreateTask onCreateTask={saveNewListData} onEditList={editNewListData} taskFunction={taskFunction} listId={currentList.key} task={editTask}></CreateTask> )
+  :( (currentPage==='add-list')?<CreateTask onCreateList={addNewList} label="List"></CreateTask>:<CreateTask label="Task" onCreateTask={saveNewListData} onEditList={editNewListData} taskFunction={taskFunction} listId={currentList.key} task={editTask}></CreateTask> )
   )
   
   

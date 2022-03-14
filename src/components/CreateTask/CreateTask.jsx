@@ -2,6 +2,14 @@ import {useState} from 'react';
 import './CreateTask.css'
 const CreateTask=(props)=>{
     //console.log(props)
+    //before mod
+    const [enteredList,setEnteredList]=useState('');
+    const listChangeHandler=(event)=>{
+        setEnteredList(event.target.value)
+    }
+
+
+    //after mod
     let selectedTitle;
     if(props.taskFunction==='edit')
     {
@@ -13,7 +21,18 @@ const CreateTask=(props)=>{
     const [enteredTask,setEnteredTask]=useState(selectedTitle);
     
     const submitHandler = (event) => {
-        event.preventDefault();
+        if(props.label==='List')
+        {
+            event.preventDefault();
+        const newList = {
+            name: enteredTask,
+            tasks:[]
+          };
+            props.onCreateList(newList,)
+            setEnteredList("");
+        }
+        else
+        {event.preventDefault();
         const newTask = {
             title: enteredTask,
           };
@@ -22,12 +41,12 @@ const CreateTask=(props)=>{
             newTask.key=props.task.key;
             props.onEditList(newTask,props.listId);
         }
-      
         else{
             props.onCreateTask(newTask,props.listId)
             setEnteredTask("");
         }
        // console.log(newTask)
+    }
         
       };
     
@@ -36,7 +55,7 @@ const CreateTask=(props)=>{
     }
     return(
         <div className='create-task'>
-            <h1>Create Task</h1>
+            <h1>Create {props.label}</h1>
             <form onSubmit={submitHandler}>
                 <div>
                         <input
