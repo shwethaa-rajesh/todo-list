@@ -3,6 +3,8 @@ import CreateTask from './components/CreateTask/CreateTask'
 import CreateList from './components/CreateList/CreateList'
 import Tasks from './components/Tasks/Tasks'
 import List from './components/List/List'
+import {Route, Routes, BrowserRouter} from 'react-router-dom'
+import { Outlet, Link , useNavigate} from "react-router-dom";
 import {useState} from 'react';
 const INITIAL_DUMMY_LISTS=[{
   key:1,
@@ -17,19 +19,20 @@ const INITIAL_DUMMY_LISTS=[{
   ]
   
 function App() {
+  const navigate=useNavigate();
   const [listsData, setList] = useState(INITIAL_DUMMY_LISTS);
   const [taskItems, setTaskItems] = useState(INITIAL_DUMMY_LISTS[0]);
   const [currentPage, setPage] = useState('view-lists');
   const [editTask, setEditTask] = useState('');
   const [taskFunction,setTaskFunction]=useState('create');
 
-  const [currentList,setCurrentList]=useState();
+  const [currentList,setCurrentList]=useState({});
 
    const saveNewListData = (newListData,listId) => {
-     console.log('Task items',taskItems)
-     console.log('new list data',newListData)
+     console.log('Task items',taskItems);
+     console.log('new list data',newListData);
      console.log('all lists',listsData);
-     console.log('current list',currentList)
+     console.log('current list',currentList);
      const newTaskData = {...newListData};
      newTaskData.key = listsData[listId-1].tasks.length+1;
      console.log("New ",newTaskData);
@@ -51,15 +54,12 @@ function App() {
      })
     setTaskItems(newList);
     setList(newLists);
+    navigate('/lists')
     setPage('lists');
     //console.log(newLists);
    };
 
    const addNewList = (newListData,listId) => {
-    // console.log('Task items',taskItems)
-    // console.log('new list data',newListData)
-    // console.log('all lists',listsData);
-    // console.log('current list',currentList)
     const newList = {...newListData};
     newList.key = listsData.length+1;
     console.log("New ",newList);
@@ -67,16 +67,14 @@ function App() {
     console.log('New list ', newList)
    setTaskItems(newList);
    setList(updatedList);
+   <Link to='view-lists'></Link>
+   navigate('/view-lists');
    setPage('view-lists');
    //console.log(newLists);
   };
 
 
    const editNewListData=(newListData,listId)=>{
-      console.log(listsData,'before edit');
-   //   console.log(taskItems,'before edit');
-     // console.log(currentList,'before edit');
-      //console.log(editTask,'before edit');
      const updatedList={
        name: listsData[listId-1].name,
        key: listsData[listId-1].key,
@@ -102,24 +100,18 @@ function App() {
    })
    console.log(updatedLists, "updated list")
      setTaskItems(updatedList);
-     setList((prevList)=>{
-       return prevList.map((eachList,index)=>{
-        if(index===listId-1)
-        {
-          return updatedList;
-        }
-        else
-        {
-          return eachList;
-        }
-     })
-     });
+     console.log(taskItems);
+     setList((prevList)=>updatedLists);
+     setCurrentList(updatedList)
      setEditTask('')
      setTaskFunction('create')
      console.log(listsData,'after edit');
     //  console.log(taskItems,'after edit');
     //  console.log(currentList,'after edit');
    //   console.log(editTask,'after edit');
+ 
+
+   navigate('/lists');
      setPage('lists');
    }
 
@@ -127,6 +119,8 @@ function App() {
     setEditTask(task);
     console.log(task,listId,'onclickedit')
     setTaskFunction('edit');
+
+   navigate('/tasks');
     setPage('tasks');
     
    }
@@ -135,32 +129,32 @@ function App() {
     setCurrentList(list);
     setTaskItems(list);
 
+   navigate('/lists');
     setPage('lists')
    }
-   /*
-  return (
-   <div className='app-container'>
-     
-     {
-       (currentPage==='lists')? <Tasks tasks={taskItems} onClickEdit={onClickEdit} setPage={setPage}/>:<CreateTask onCreateList={saveNewListData} onEditList={editNewListData} taskFunction={taskFunction}  task={editTask}></CreateTask>
-
-     }
-    
-
-   </div>
-  );
-  */
  return(
     <div className='app-container'>
 {
   // (currentPage==='view-lists')? <List lists={listsData} onClickList={onClickList} setPage={setPage}/>
   // : ((currentPage==='lists')? <Tasks tasks={taskItems} listId={currentList.key} onClickEdit={onClickEdit} setEditTask={setEditTask} setPage={setPage} onCreateList={addNewList}/>
   // : <CreateTask onCreateTask={saveNewListData} onEditList={editNewListData} taskFunction={taskFunction} listId={currentList.key} task={editTask}></CreateTask> )
-  
+  /*
   (currentPage==='view-lists')? <List lists={listsData} onClickList={onClickList} setPage={setPage}/>
   : ((currentPage==='lists')? <Tasks tasks={taskItems} listId={currentList.key} onClickEdit={onClickEdit} setEditTask={setEditTask} setPage={setPage} onCreateList={addNewList}/>
   :( (currentPage==='add-list')?<CreateTask onCreateList={addNewList} label="List"></CreateTask>:<CreateTask label="Task" onCreateTask={saveNewListData} onEditList={editNewListData} taskFunction={taskFunction} listId={currentList.key} task={editTask}></CreateTask> )
   )
+*/
+ 
+  
+      <Routes>
+          <Route path='/view-lists' element={<List lists={listsData} navigate={navigate} onClickList={onClickList} setPage={setPage}/>}></Route>
+          <Route path='/lists' element={<Tasks tasks={taskItems} navigate={navigate} listId={currentList.key} onClickEdit={onClickEdit} setEditTask={setEditTask} setPage={setPage} onCreateList={addNewList}/>}></Route>
+          <Route path='/add-list' element={<CreateTask onCreateList={addNewList} navigate={navigate} label="List"></CreateTask>}></Route>
+          <Route path='/tasks' element={<CreateTask label="Task" onCreateTask={saveNewListData} onEditList={editNewListData}  navigate={navigate} taskFunction={taskFunction} listId={currentList.key} task={editTask}></CreateTask> }></Route>
+          <Route path='*' element={<div>Page not found</div>}></Route>
+      </Routes>
+  
+
   
   
   

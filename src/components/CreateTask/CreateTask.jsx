@@ -30,6 +30,7 @@ const CreateTask=(props)=>{
           };
             props.onCreateList(newList,)
             setEnteredList("");
+          
         }
         else
         {event.preventDefault();
@@ -42,6 +43,7 @@ const CreateTask=(props)=>{
             props.onEditList(newTask,props.listId);
         }
         else{
+            
             props.onCreateTask(newTask,props.listId)
             setEnteredTask("");
         }

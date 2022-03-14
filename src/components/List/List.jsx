@@ -1,6 +1,8 @@
 
 //import ListItem from '../ListItem/ListItem'
 import './List.css'
+
+import { Outlet, Link } from "react-router-dom";
 //import {useState} from 'react'
 const List=(props)=>{
     const listItems = props.lists.map((eachList) => {
@@ -26,8 +28,10 @@ const List=(props)=>{
         </ul>
     </div>
     <button onClick={()=>{
-             props.setPage('add-list')
+             props.setPage('add-list');
+            props.navigate('/add-list')
            }}>Add List</button>
+   ]
     </div>)
 }
 export default List;

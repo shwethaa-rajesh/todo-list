@@ -1,4 +1,5 @@
 import CreateTask from '../CreateTask/CreateTask'
+
 import TaskItem from '../TaskItem/TaskItem'
 import './Tasks.css'
 //import {useState} from 'react'
@@ -23,13 +24,14 @@ const Tasks=(props)=>{
             <hr/>
             
     </div>
+    
     <button onClick={()=>{
              props.setEditTask('')
-             props.setPage('tasks');
+             props.navigate('/tasks');
              
            }}>Add task</button>
     <button onClick={()=>{
-             props.setPage('view-lists')
+             props.navigate('/view-lists')
            }}>View Lists</button>
     </div>)
 }
