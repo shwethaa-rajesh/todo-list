@@ -1,15 +1,11 @@
 import {useState} from 'react';
 import './CreateTask.css'
 const CreateTask=(props)=>{
-    //console.log(props)
-    //before mod
     const [enteredList,setEnteredList]=useState('');
     const listChangeHandler=(event)=>{
         setEnteredList(event.target.value)
     }
 
-
-    //after mod
     let selectedTitle;
     if(props.taskFunction==='edit')
     {
@@ -28,7 +24,7 @@ const CreateTask=(props)=>{
             name: enteredTask,
             tasks:[]
           };
-            props.onCreateList(newList,)
+            props.onCreateList(newList)
             setEnteredList("");
           
         }
@@ -64,6 +60,7 @@ const CreateTask=(props)=>{
                             value={enteredTask}
                             onChange={taskChangeHandler}
                             type="text"
+                            data-testid="testId-listNameTextInput"
                         ></input>
                 </div>
                 <button type="submit">Submit</button>

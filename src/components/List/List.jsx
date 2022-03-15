@@ -11,6 +11,7 @@ const List=(props)=>{
        <div className='list-item'>
            <li>
            <h4>{eachList.name}</h4>
+         
            <button onClick={()=>{
              props.onClickList(eachList)
            }}>View</button>
@@ -24,14 +25,14 @@ const List=(props)=>{
         <h1>All lists</h1>
         <ul>
             {listItems}
-            <hr/>
+      
         </ul>
     </div>
     <button onClick={()=>{
              props.setPage('add-list');
             props.navigate('/add-list')
            }}>Add List</button>
-   ]
+   
     </div>)
 }
 export default List;

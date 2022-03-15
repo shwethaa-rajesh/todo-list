@@ -1,0 +1,22 @@
+.task-container{ 
+    display: flex;
+
+   justify-content: center;
+}
+.list-item {
+    list-style: none;
+    display:flex;
+    border: 5px solid black;
+    padding:20px;
+    height:100px;
+    width: 150px;   
+    justify-content: flex-start; 
+    align-content: flex-start;
+    align-items: flex-start;
+    background-color: lavender;
+    color: black
+}
+.task-container button{
+    display: flex;
+    justify-content: center;
+ }
