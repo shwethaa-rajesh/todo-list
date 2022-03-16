@@ -112,3 +112,62 @@ describe("Create Task", () => {
       expect(mockSetListData).toHaveBeenCalledWith({title:"Test Task Save"},1);
     });
   });
+
+ 
+describe("Edit Task", () => {
+     
+    const mockSetListData = jest.fn();
+    const component = (
+      <MemoryRouter initialEntries={[`/task`]}>
+        <Routes>
+          <Route
+            path={`/task`}
+            element={<CreateTask label='Task' onEditList={mockSetListData} taskFunction="edit" listId={1} task={MOCK_LISTS[0].tasks[0]}/>}
+          ></Route>
+          <Route
+            path={`/lists`}
+            element={<div>Mock List Page</div>}
+          ></Route>
+        </Routes>
+      </MemoryRouter>
+    );
+  
+    beforeEach(() => {
+      mockSetListData.mockClear();
+    });
+  
+    it("should update task title input value when input text is changed", () => {
+      render(component);
+      const mockListName = "Test Edit Name";
+      fireEvent.change(screen.getByTestId("testId-listNameTextInput"), {
+        target: { value: mockListName },
+      });
+      expect(screen.getByTestId("testId-listNameTextInput")).toHaveAttribute(
+        "value",
+        mockListName
+      );
+      expect(mockSetListData).not.toHaveBeenCalled();
+    });
+    it("should have initial task value set as previous title name", () => {
+        render(component);
+        expect(screen.getByTestId("testId-listNameTextInput")).toHaveAttribute(
+          "value",
+          "walk"
+        );
+       
+        expect(mockSetListData).not.toHaveBeenCalled();
+      });
+    
+  
+    it("should return a new task object with the same key when title is updated", () => {
+      render(component);
+      const mockTaskTitleText = "Test Title Edit";
+      fireEvent.change(screen.getByTestId("testId-listNameTextInput"), {
+        target: { value: mockTaskTitleText },
+      });
+      expect(mockSetListData).not.toHaveBeenCalled();
+      fireEvent.click(screen.getByText("Submit"));
+      expect(mockSetListData).toHaveBeenCalledTimes(1);
+      expect(mockSetListData).toHaveBeenCalledWith({title:"Test Title Edit",key:1},1);
+    });
+  }); 

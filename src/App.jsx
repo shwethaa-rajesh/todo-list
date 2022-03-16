@@ -1,10 +1,9 @@
 import './App.css';
 import CreateTask from './components/CreateTask/CreateTask'
-import CreateList from './components/CreateList/CreateList'
 import Tasks from './components/Tasks/Tasks'
 import List from './components/List/List'
-import {Route, Routes, BrowserRouter} from 'react-router-dom'
-import { Outlet, Link , useNavigate} from "react-router-dom";
+import {Route, Routes} from 'react-router-dom'
+import { Link , useNavigate} from "react-router-dom";
 import {useState} from 'react';
 const INITIAL_DUMMY_LISTS=[{
   key:1,
@@ -22,7 +21,6 @@ function App() {
   const navigate=useNavigate();
   const [listsData, setList] = useState(INITIAL_DUMMY_LISTS);
   const [taskItems, setTaskItems] = useState(INITIAL_DUMMY_LISTS[0]);
-  const [currentPage, setPage] = useState('view-lists');
   const [editTask, setEditTask] = useState('');
   const [taskFunction,setTaskFunction]=useState('create');
 
@@ -55,7 +53,7 @@ function App() {
     setTaskItems(newList);
     setList(newLists);
     navigate('/lists')
-    setPage('lists');
+    //setPage('lists');
     //console.log(newLists);
    };
 
@@ -69,7 +67,7 @@ function App() {
    setList(updatedList);
    <Link to='view-lists'></Link>
    navigate('/view-lists');
-   setPage('view-lists');
+  // setPage('view-lists');
    //console.log(newLists);
   };
 
@@ -112,7 +110,7 @@ function App() {
  
 
    navigate('/lists');
-     setPage('lists');
+    // setPage('lists');
    }
 
    const onClickEdit=(task,listId)=>{
@@ -121,7 +119,7 @@ function App() {
     setTaskFunction('edit');
 
    navigate('/tasks');
-    setPage('tasks');
+   // setPage('tasks');
     
    }
    const onClickList=(list)=>{
@@ -130,7 +128,7 @@ function App() {
     setTaskItems(list);
 
    navigate('/lists');
-    setPage('lists')
+    //setPage('lists')
    }
  return(
     <div className='app-container'>
@@ -147,8 +145,8 @@ function App() {
  
   
       <Routes>
-          <Route path='/view-lists' element={<List lists={listsData} navigate={navigate} onClickList={onClickList} setPage={setPage}/>}></Route>
-          <Route path='/lists' element={<Tasks tasks={taskItems} navigate={navigate} listId={currentList.key} onClickEdit={onClickEdit} setEditTask={setEditTask} setPage={setPage} onCreateList={addNewList}/>}></Route>
+          <Route path='/view-lists' element={<List lists={listsData} navigate={navigate} onClickList={onClickList} />}></Route>
+          <Route path='/lists' element={<Tasks tasks={taskItems} navigate={navigate} listId={currentList.key} onClickEdit={onClickEdit} setEditTask={setEditTask}  onCreateList={addNewList}/>}></Route>
           <Route path='/add-list' element={<CreateTask onCreateList={addNewList} navigate={navigate} label="List"></CreateTask>}></Route>
           <Route path='/tasks' element={<CreateTask label="Task" onCreateTask={saveNewListData} onEditList={editNewListData}  navigate={navigate} taskFunction={taskFunction} listId={currentList.key} task={editTask}></CreateTask> }></Route>
           <Route path='*' element={<div>Page not found</div>}></Route>

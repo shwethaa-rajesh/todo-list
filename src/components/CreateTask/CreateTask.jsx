@@ -1,14 +1,11 @@
 import {useState} from 'react';
 import './CreateTask.css'
 const CreateTask=(props)=>{
-    const [enteredList,setEnteredList]=useState('');
-    const listChangeHandler=(event)=>{
-        setEnteredList(event.target.value)
-    }
 
     let selectedTitle;
     if(props.taskFunction==='edit')
     {
+        console.log(props)
         selectedTitle=props.task.title;
     }
     else{
@@ -25,7 +22,7 @@ const CreateTask=(props)=>{
             tasks:[]
           };
             props.onCreateList(newList)
-            setEnteredList("");
+            setEnteredTask("");
           
         }
         else
