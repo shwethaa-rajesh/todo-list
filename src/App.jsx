@@ -95,7 +95,7 @@ function App() {
         name: getItemBasedOnId(listsData,listId).name,
         key: getItemBasedOnId(listsData,listId).id,
         tasks: taskItems.tasks.map((eachTask,taskIndex)=>{
-          if(taskIndex+1===newTaskData.key){
+          if(eachTask.id===newTaskData.key){
             return newTaskData;
           }
           else
@@ -114,9 +114,10 @@ function App() {
         return eachList;
       }
    })
-     setTaskItems(updatedList);
+   console.log(updatedLists)
+     setTaskItems(()=>updatedList);
      setList((prevList)=>updatedLists);
-     setCurrentList(updatedList)
+     setCurrentList(()=>updatedList)
      setEditTask('')
      setTaskFunction('create')
      navigate('/lists');
