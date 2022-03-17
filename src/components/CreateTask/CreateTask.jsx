@@ -1,11 +1,11 @@
 import {useState} from 'react';
 import './CreateTask.css'
 const CreateTask=(props)=>{
-
+// console.log(props)
     let selectedTitle;
     if(props.taskFunction==='edit')
     {
-        console.log(props)
+     //   console.log(props)
         selectedTitle=props.task.title;
     }
     else{
@@ -32,7 +32,8 @@ const CreateTask=(props)=>{
           };
         if(props.taskFunction==='edit')
         {
-            newTask.key=props.task.key;
+            newTask.key=props.task.id;
+            console.log(newTask)
             props.onEditList(newTask,props.listId);
         }
         else{

@@ -1,7 +1,23 @@
 
-.app-container{
 
-    justify-content: center;
-    display:flex;
-    height:100%
-}
+.App {
+    text-align: center;
+  }
+  .App-logo {
+    height: 40vmin;
+    pointer-events: none;
+  }
+  body{
+    height:400%;
+    height:100vh;
+    background: linear-gradient(to bottom, #8c54fc  50% ,  #bc9af6 50%);
+  }
+  button{
+    cursor: pointer;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+      animation: App-logo-spin infinite 20s linear;
+    }
+  }

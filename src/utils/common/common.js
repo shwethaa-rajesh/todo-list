@@ -1,5 +1,6 @@
 export const checkIfItemIdMatchesIdToSelect = (item, idToSelect) =>
-  item.key === parseInt(idToSelect);
+ { //console.log(item);
+   return item.key === parseInt(idToSelect);}
 
 export const getItemBasedOnId = (itemList, idToSelect) =>
   itemList?.find((item) => checkIfItemIdMatchesIdToSelect(item, idToSelect));

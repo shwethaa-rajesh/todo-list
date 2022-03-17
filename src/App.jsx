@@ -7,7 +7,7 @@ import { Link , useNavigate} from "react-router-dom";
 import {useEffect, useState} from 'react';
 import makeRequest from './utils/backend/makeRequest'
 import {BACKEND_URL,getLists,getTasksInList,} from './constants/apiEndpoints'
-import {getAllLists,addTasksToLists,addNewListDB} from './utils/backend/backend.utils'
+import {getAllLists,addTasksToLists,addNewListDB,addNewTaskDB,updateTaskDB} from './utils/backend/backend.utils'
 import {getItemBasedOnId} from './utils/common/common'
 const INITIAL_DUMMY_LISTS=[{
   key:1,
@@ -32,7 +32,7 @@ function App() {
         {
           setIsInitialised(true);
          let data;
-        getAllLists().then((response)=>{ data =response; console.log('response',data); setList(data);
+        getAllLists().then((response)=>{ data =response;  setList(data);
       //  addTasksToLists(data).then((response)=>{ data =response; console.log('tasks',data); setList(data);})
       } );
        // addTasksToLists(data).then((response)=>{ data =response; console.log('response',data); setList(data);} )
@@ -51,30 +51,29 @@ function App() {
   const [currentList,setCurrentList]=useState({});
 
    const saveNewListData = (newListData,listId) => {
-     const newTaskData = {...newListData};
-     newTaskData.key = getItemBasedOnId(listsData,listId).tasks.length+1;
-     console.log("New ",newTaskData);
-     const newList={
+     addNewTaskDB(newListData,listId).then((response)=>{
+       console.log(response);
+       const newList={
         name:getItemBasedOnId(listsData,listId).name,
         key: getItemBasedOnId(listsData,listId).key,
-        tasks: [...taskItems.tasks, newTaskData]
+        tasks: [...taskItems.tasks, response]
      }
-     console.log('New list ', newList)
      const newLists= listsData.map((eachList,index)=>{
-        if(index===listId-1)
-        {
-          return newList;
-        }
-        else
-        {
-          return eachList;
-        }
+      if(index===listId-1)
+      {
+        return newList;
+      }
+      else
+      {
+        return eachList;
+      }
+   })
+  setTaskItems(newList);
+  setList(newLists);
+  navigate('/lists')
+
      })
-    setTaskItems(newList);
-    setList(newLists);
-    navigate('/lists')
-    //setPage('lists');
-    //console.log(newLists);
+
    };
 
    const addNewList = (newListData,listId) => {
@@ -85,33 +84,26 @@ function App() {
       setList(updatedList);
       navigate('/view-lists')
     })
-  //   newList.key = listsData.length+1;
-  //   console.log("New ",newList);
-  //   const updatedList=[...listsData,newList]
-  //   console.log('New list ', newList)
-  //  setTaskItems(newList);
-  //  setList(updatedList);
-  //  <Link to='view-lists'></Link>
-  //  navigate('/view-lists');
-  // setPage('view-lists');
-   //console.log(newLists);
+
   };
 
 
-   const editNewListData=(newListData,listId)=>{
-     const updatedList={
-       name: listsData[listId-1].name,
-       key: listsData[listId-1].key,
-       tasks: taskItems.tasks.map((eachTask,taskIndex)=>{
-         if(taskIndex+1===newListData.key){
-           return newListData;
-         }
-         else
-         {
-           return eachTask;
-         }
-       })
-     }
+   const editNewListData=(newTaskData,listId)=>{
+     console.log(getItemBasedOnId(listsData,listId))
+    updateTaskDB(newTaskData).then((response)=>{
+      const updatedList={
+        name: getItemBasedOnId(listsData,listId).name,
+        key: getItemBasedOnId(listsData,listId).id,
+        tasks: taskItems.tasks.map((eachTask,taskIndex)=>{
+          if(taskIndex+1===newTaskData.key){
+            return newTaskData;
+          }
+          else
+          {
+            return eachTask;
+          }
+        })
+      }    
      const updatedLists= listsData.map((eachList,index)=>{
       if(index===listId-1)
       {
@@ -122,21 +114,15 @@ function App() {
         return eachList;
       }
    })
-   console.log(updatedLists, "updated list")
      setTaskItems(updatedList);
-     console.log(taskItems);
      setList((prevList)=>updatedLists);
      setCurrentList(updatedList)
      setEditTask('')
      setTaskFunction('create')
-     console.log(listsData,'after edit');
-    //  console.log(taskItems,'after edit');
-    //  console.log(currentList,'after edit');
-   //   console.log(editTask,'after edit');
- 
+     navigate('/lists');
+    })
+   
 
-   navigate('/lists');
-    // setPage('lists');
    }
 
    const onClickEdit=(task,listId)=>{
@@ -163,7 +149,7 @@ function App() {
     //setPage('lists')
    }
  return(
-    <div className='app-container'>
+    <div className='App'>
 {
 
   

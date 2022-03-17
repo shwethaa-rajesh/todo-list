@@ -1,5 +1,5 @@
 import makeRequest from './makeRequest';
-import {BACKEND_URL,getLists,getTasksInList,addList,addTask} from '../../constants/apiEndpoints'
+import {getLists,getTasksInList,addList,addTask,updateTask} from '../../constants/apiEndpoints'
 const getAllLists= async()=>{
     let listsDB= await makeRequest(getLists());
 
@@ -12,6 +12,7 @@ const getAllLists= async()=>{
            
         }
     })
+    console.log(listsDB)
     return listsDB;
 }
 const addNewListDB=async(newList)=>{
@@ -22,6 +23,27 @@ const addNewListDB=async(newList)=>{
     Object.defineProperty(updatedList, 'key', Object.getOwnPropertyDescriptor(updatedList, 'id'));
     delete updatedList['id'];                
     return updatedList;
+}
+
+const addNewTaskDB=async(newTask,listId)=>{
+    console.log(newTask)
+    let updatedTask= await makeRequest(addTask(listId,{task:newTask.title}));
+    console.log(updatedTask);
+    delete updatedTask['createdAt'];
+    delete updatedTask['updatedAt'];
+    delete updatedTask['list_id'];
+    delete updatedTask['listId'];
+    Object.defineProperty(updatedTask, 'key', Object.getOwnPropertyDescriptor(updatedTask, 'id'));
+    delete updatedTask['id'];    
+    console.log('new task',updateTask) ;           
+    return updatedTask;
+}
+const updateTaskDB=async(newTask)=>{
+    const taskId=newTask.key;
+    console.log(taskId,newTask.title,'id title' )
+    let updatedTask= await makeRequest(updateTask(taskId,{task:newTask.title}));
+    return newTask
+    
 }
 const addTasksToLists=async(listId,lists)=>{
     let tasks=  await makeRequest(getTasksInList(listId));
@@ -41,7 +63,7 @@ const addTasksToLists=async(listId,lists)=>{
         }
 
     })
-    console.log(data);
+   // console.log(data);
     return data
 }
 
@@ -56,5 +78,5 @@ const getTasks= async(listId)=>{
     return tasks;
 }
 //console.log(getAllLists())
-export {getAllLists, getTasks,addTasksToLists,addNewListDB};
+export {getAllLists, getTasks,addTasksToLists,addNewListDB,addNewTaskDB,updateTaskDB};
 

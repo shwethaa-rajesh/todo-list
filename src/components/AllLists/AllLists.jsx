@@ -6,32 +6,34 @@ import { useEffect, useState } from 'react';
 
 import makeRequest from '../../utils/backend/makeRequest'
 const AllLists=(props)=>{
- // console.log(props)
+ //console.log(props)
     const listItems = props.lists.map((eachList) => {
        return (
-       <div className='list-item'>
-           <li>
-           <h4>{eachList.name}</h4>
-         
-           <button onClick={()=>{
+       
+          
+           <button type="button" className='list-item' onClick={()=>{
              props.onClickList(eachList)
-           }}>View</button>
-           </li>
-       </div>
+           }}>{eachList.name}</button>
+          
+     
+       
        )
     });
     return(
         <div className='list'>
-    <div className="task-container">
+        <button className="add-list" onClick={()=>{
+            props.navigate('/add-list')
+           }}>CREATE LIST</button>
+            <br/>
+            <br/>
+    <div className="list-container">
         <h1>All lists</h1>
-        <ul>
+        <div className='list-items'>
             {listItems}
       
-        </ul>
+            </div>
     </div>
-    <button onClick={()=>{
-            props.navigate('/add-list')
-           }}>Add List</button>
+   
    
     </div>)
 }
