@@ -40,6 +40,14 @@ describe("Create List", () => {
     );
     expect(mockSetListData).not.toHaveBeenCalled();
   });
+  it("should display text when label prop is passed", () => {
+    render(component);
+    expect(screen.getByText('List')).toBeTruthy();
+    expect(screen.queryByText('Ltst')).toBeFalsy();
+    fireEvent.click(screen.queryByText('Submit'));
+    //expect(screen.queryByText('Submit')).toBeFalsy();
+
+   });
 
   it("should add new list with entered name when save button is clicked", () => {
     render(component);

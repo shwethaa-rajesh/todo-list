@@ -50,7 +50,10 @@ const CreateTask=(props)=>{
     }
     return(
         <div className='create-task'>
-            <h1>Create {props.label}</h1>
+            <h1>Create 
+                <span>{props.label}</span>
+            </h1>
+            
             <form onSubmit={submitHandler}>
                 <div>
                         <input

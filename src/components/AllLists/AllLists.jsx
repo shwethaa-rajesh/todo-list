@@ -1,12 +1,13 @@
 
 //import ListItem from '../ListItem/ListItem'
-import './List.css'
+import './AllLists.css'
+import {BACKEND_URL,getLists,getTasksInList} from '../../constants/apiEndpoints';
+import { useEffect, useState } from 'react';
 
-import { Outlet, Link } from "react-router-dom";
-//import {useState} from 'react'
-const List=(props)=>{
+import makeRequest from '../../utils/backend/makeRequest'
+const AllLists=(props)=>{
+ // console.log(props)
     const listItems = props.lists.map((eachList) => {
-      //  console.log(eachList)
        return (
        <div className='list-item'>
            <li>
@@ -29,10 +30,9 @@ const List=(props)=>{
         </ul>
     </div>
     <button onClick={()=>{
-             props.setPage('add-list');
             props.navigate('/add-list')
            }}>Add List</button>
    
     </div>)
 }
-export default List;
+export default AllLists;

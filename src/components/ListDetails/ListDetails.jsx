@@ -1,9 +1,7 @@
-import CreateTask from '../CreateTask/CreateTask'
 
-import TaskItem from '../TaskItem/TaskItem'
-import './Tasks.css'
+import './ListDetails.css'
 //import {useState} from 'react'
-const Tasks=(props)=>{
+const ListDetails=(props)=>{
     //console.log(props)
     const TaskItems = props.tasks.tasks.map((eachTask) => {
        // console.log(eachTask)
@@ -35,4 +33,4 @@ const Tasks=(props)=>{
            }}>View Lists</button>
     </div>)
 }
-export default Tasks;
+export default ListDetails;
