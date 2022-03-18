@@ -14,7 +14,7 @@ const ListDetails=(props)=>{
     const TaskItems = props.tasks.tasks.map((eachTask) => {
        // console.log(eachTask)
        return (
-        <button type="button" className='task-item' onClick={()=>{
+        <button type="button" className='task-item' key={eachTask.id} onClick={()=>{
           props.onClickEdit(eachTask,props.listId)
         }}>{eachTask.title}</button>
        )
