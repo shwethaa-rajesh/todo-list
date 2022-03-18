@@ -167,7 +167,7 @@ describe("Edit Task", () => {
       });
     
   
-    it("should return a new task object with the same key when title is updated", () => {
+    it("should return a new task object with the same id when title is updated", () => {
       render(component);
       const mockTaskTitleText = "Test Title Edit";
       fireEvent.change(screen.getByTestId("testId-listNameTextInput"), {
@@ -176,6 +176,6 @@ describe("Edit Task", () => {
       expect(mockSetListData).not.toHaveBeenCalled();
       fireEvent.click(screen.getByText("Submit"));
       expect(mockSetListData).toHaveBeenCalledTimes(1);
-      expect(mockSetListData).toHaveBeenCalledWith({title:"Test Title Edit",key:1},1);
+      expect(mockSetListData).toHaveBeenCalledWith({title:"Test Title Edit",id:1},1);
     });
   }); 

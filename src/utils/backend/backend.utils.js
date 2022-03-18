@@ -112,12 +112,12 @@ const addNewTaskDB=async(newTask,listId)=>{
     console.log(newTask)
     let updatedTask= await makeRequest(addTask(listId,{task:newTask.title}));
     console.log(updatedTask);
-    delete updatedTask['createdAt'];
-    delete updatedTask['updatedAt'];
-    delete updatedTask['list_id'];
-    delete updatedTask['listId'];
-    Object.defineProperty(updatedTask, 'id', Object.getOwnPropertyDescriptor(updatedTask, 'id'));
-    delete updatedTask['id'];    
+    // delete updatedTask['createdAt'];
+    // delete updatedTask['updatedAt'];
+    // delete updatedTask['list_id'];
+    // delete updatedTask['listId'];
+    // Object.defineProperty(updatedTask, 'id', Object.getOwnPropertyDescriptor(updatedTask, 'id'));
+    // delete updatedTask['id'];    
     console.log('new task',updateTask) ;           
     return updatedTask;
 }

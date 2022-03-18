@@ -267,6 +267,7 @@ function App() {
    const editNewListData=(newTaskData,listId)=>{
      console.log(getItemBasedOnId(listsData,listId))
      console.log(listId,listsData)
+     console.log(newTaskData)
     updateTaskDB(newTaskData).then((response)=>{
       const updatedList={
         name: getItemBasedOnId(listsData,listId).name,
