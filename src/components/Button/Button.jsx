@@ -1,22 +1,25 @@
+/* eslint-disable react/prop-types */
+import React from 'react';
 
-import React from "react";
-const mockList={
-    title:'abcd'
+const mockList = {
+  title: 'abcd',
 };
-let currentTask=mockList;
-const onTaskTitleChange=(event)=>{
-    currentTask.title=event.value;
-}
-const Button = ({ onClick, buttonText }) => (
+const currentTask = mockList;
+const onTaskTitleChange = (event) => {
+  currentTask.title = event.value;
+};
+function Button({ onClick, buttonText }) {
+  return (
     <>
-    <input value={currentTask.title}
+      <input
+        value={currentTask.title}
         onChange={onTaskTitleChange}
-        data-testid="testId-taskTitleTextInput">
+        data-testid="testId-taskTitleTextInput"
+      />
+      <button type="button" onClick={onClick}>{buttonText}</button>
 
-    </input>
-  <button onClick={onClick}>{buttonText}</button>
-
-  </>
-);
+    </>
+  );
+}
 
 export default Button;
