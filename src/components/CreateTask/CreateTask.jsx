@@ -32,7 +32,8 @@ const CreateTask=(props)=>{
           };
         if(props.taskFunction==='edit')
         {
-            newTask.key=props.task.id;
+            console.log(props)
+            newTask.id=props.task.id;
             console.log(newTask)
             props.onEditList(newTask,props.listId);
         }
