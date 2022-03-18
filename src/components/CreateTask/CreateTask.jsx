@@ -1,11 +1,9 @@
 import {useState} from 'react';
 import './CreateTask.css'
-
 import {addNewListDB,addNewTaskDB,updateTaskDB} from '../../utils/backend/backend.utils'
 import {getItemBasedOnId} from '../../utils/common/common'
 import { useNavigate } from 'react-router-dom';
 const CreateTask=(props)=>{
-// console.log(props)
 const navigate=useNavigate();
 
 const onCreateTask = (newListData,listId) => {
@@ -44,6 +42,45 @@ const onCreateTask = (newListData,listId) => {
     })
 
   };
+  const onEditList=(newTaskData,listId)=>{
+    console.log(getItemBasedOnId(props.listsData,listId))
+    console.log(listId,props.listsData)
+    console.log(newTaskData)
+   updateTaskDB(newTaskData).then((response)=>{
+     const updatedList={
+       name: getItemBasedOnId(props.listsData,listId).name,
+       id: getItemBasedOnId(props.listsData,listId).id,
+       tasks: props.taskItems.tasks.map((eachTask,taskIndex)=>{
+         if(eachTask.id===newTaskData.id){
+           return newTaskData;
+         }
+         else
+         {
+           return eachTask;
+         }
+       })
+     }    
+    const updatedLists= props.listsData.map((eachList,index)=>{
+     if(index===listId-1)
+     {
+       return updatedList;
+     }
+     else
+     {
+       return eachList;
+     }
+  })
+  console.log(updatedLists)
+    props.setTaskItems(()=>updatedList);
+    props.setList((prevList)=>updatedLists);
+    props.setCurrentList(()=>updatedList)
+    props.setEditTask('')
+    props.setTaskFunction('create')
+    navigate('/lists');
+   })
+  
+
+  }
     let selectedTitle;
     if(props.taskFunction==='edit')
     {
@@ -77,19 +114,14 @@ const onCreateTask = (newListData,listId) => {
             console.log(props)
             newTask.id=props.task.id;
             console.log(newTask)
-            props.onEditList(newTask,props.listId);
+            onEditList(newTask,props.listId);
         }
         else{
-            
-           // props.onCreateTask(newTask,props.listId)
             onCreateTask(newTask,props.listId)
             setEnteredTask("");
         }
-       // console.log(newTask)
     }
-        
-      };
-    
+      };  
     const taskChangeHandler=(event)=>{
         setEnteredTask(event.target.value)
     }
@@ -114,8 +146,6 @@ const onCreateTask = (newListData,listId) => {
                 </button>
             </form>
         </div>
-        
     )
 }
-
 export default CreateTask

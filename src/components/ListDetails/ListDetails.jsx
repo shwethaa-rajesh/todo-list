@@ -1,21 +1,18 @@
-
+import { useNavigate } from 'react-router-dom';
 import './ListDetails.css'
-//import {useState} from 'react'
 const ListDetails=(props)=>{
-    //console.log(props)
-    /*
-<div className='task-item'>
-           <h4>{eachTask.title}</h4>
-           <button onClick={()=>{
-             props.onClickEdit(eachTask,props.listId)
-           }}>Edit</button>
-       </div>
-    */
+    const navigate=useNavigate()
+      const onClickEdit=(task,listId)=>{
+        props.setEditTask(task);
+        console.log(task,listId,'onclickedit')
+        props.setTaskFunction('edit');
+    
+       navigate('/tasks');
+       }
     const TaskItems = props.tasks.tasks.map((eachTask) => {
-       // console.log(eachTask)
        return (
         <button type="button" className='task-item' onClick={()=>{
-          props.onClickEdit(eachTask,props.listId)
+           onClickEdit(eachTask,props.listId)
         }}>{eachTask.title}</button>
        )
     });
