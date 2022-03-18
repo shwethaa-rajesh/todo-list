@@ -1,7 +1,7 @@
 import './App.css';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-import CreateTask from './components/CreateTask/CreateTask';
+import Create from './components/Create/Create';
 import ListDetails from './components/ListDetails/ListDetails';
 import AllLists from './components/AllLists/AllLists';
 import { getAllLists, addTasksToLists } from './utils/backend/backend.utils';
@@ -40,6 +40,7 @@ function App() {
   const [editTask, setEditTask] = useState('');
   const [taskFunction, setTaskFunction] = useState('create');
   const [currentList, setCurrentList] = useState({});
+
   const onClickList = (list) => {
     console.log(listsData);
     console.log(list);
@@ -55,8 +56,8 @@ function App() {
       <Routes>
         <Route path="/view-lists" element={<AllLists lists={listsData} navigate={navigate} onClickList={onClickList} setList={setList} setCurrentList={setCurrentList} setTaskItems={setTaskItems} />} />
         <Route path="/lists" element={<ListDetails tasks={taskItems} navigate={navigate} listId={currentList.id} setEditTask={setEditTask} setTaskFunction={setTaskFunction} />} />
-        <Route path="/add-list" element={<CreateTask navigate={navigate} label="List" listsData={listsData} setList={setList} taskItems={taskItems} setTaskItems={setTaskItems} />} />
-        <Route path="/tasks" element={<CreateTask label="Task" listsData={listsData} setList={setList} taskItems={taskItems} setTaskItems={setTaskItems} setTaskFunction={setTaskFunction} setCurrentList={setCurrentList} setEditTask={setEditTask} taskFunction={taskFunction} listId={currentList.id} task={editTask} />} />
+        <Route path="/add-list" element={<Create navigate={navigate} label="List" listsData={listsData} setList={setList} taskItems={taskItems} setTaskItems={setTaskItems} />} />
+        <Route path="/tasks" element={<Create label="Task" navigate={navigate} listsData={listsData} setList={setList} taskItems={taskItems} setTaskItems={setTaskItems} setTaskFunction={setTaskFunction} setCurrentList={setCurrentList} setEditTask={setEditTask} taskFunction={taskFunction} listId={currentList.id} task={editTask} />} />
         <Route path="*" element={<div>Page not found</div>} />
       </Routes>
 

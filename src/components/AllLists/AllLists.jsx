@@ -2,14 +2,15 @@
 /* eslint-disable react/prop-types */
 import './AllLists.css';
 import React from 'react';
+import PropTypes from 'prop-types';
 
-function AllLists(props) {
-  const listItems = props.lists.map((eachList) => (
+function AllLists({ lists, onClickList, navigate }) {
+  const listItems = lists.map((eachList) => (
     <button
       type="button"
       className="list-item"
       onClick={() => {
-        props.onClickList(eachList);
+        onClickList(eachList);
       }}
     >
       {eachList.name}
@@ -21,7 +22,7 @@ function AllLists(props) {
         type="button"
         className="add-list"
         onClick={() => {
-          props.navigate('/add-list');
+          navigate('/add-list');
         }}
       >
         CREATE LIST
@@ -37,4 +38,24 @@ function AllLists(props) {
     </div>
   );
 }
+AllLists.propTypes = {
+  lists: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    tasks: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      title: PropTypes.string,
+      createdAt: PropTypes.string,
+      updatedAt: PropTypes.string,
+      listId: PropTypes.number,
+    })),
+  })),
+  onClickList: PropTypes.func,
+  navigate: PropTypes.func,
+};
+AllLists.defaultProps = {
+  lists: [],
+  onClickList: () => {},
+  navigate: () => {},
+};
 export default AllLists;

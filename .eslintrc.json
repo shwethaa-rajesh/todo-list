@@ -1,9 +1,8 @@
 {
     "env": {
         "browser": true,
-        "commonjs": true,
         "es2021": true,
-        "jest" : true
+        "jest": true
     },
     "extends": [
         "plugin:react/recommended",
@@ -13,14 +12,12 @@
         "ecmaFeatures": {
             "jsx": true
         },
-        "ecmaVersion": "latest"
+        "ecmaVersion": "latest",
+        "sourceType": "module"
     },
     "plugins": [
         "react"
     ],
     "rules": {
-        "react/prop-types": 0,
-        "react/destructuring-assignment" :0
-
     }
 }

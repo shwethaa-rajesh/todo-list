@@ -1,24 +1,33 @@
+/* eslint-disable no-shadow */
 import { useNavigate } from 'react-router-dom';
 import './ListDetails.css';
 import React from 'react';
 
-function ListDetails(props) {
+import PropTypes from 'prop-types';
+
+function ListDetails(
+  {
+    setEditTask, setTaskFunction, tasks, listId,
+  },
+) {
   const navigate = useNavigate();
   const onClickEdit = (task, listId) => {
-    props.setEditTask(task);
+    setEditTask(task);
     console.log(task, listId, 'onclickedit');
-    props.setTaskFunction('edit');
+    setTaskFunction('edit');
 
     navigate('/tasks');
   };
-  const TaskItems = props.tasks.tasks.map((eachTask) => (
+
+  const TaskItems = tasks.tasks.map((eachTask) => (
     <button
       type="button"
       className="task-item"
       onClick={() => {
-        onClickEdit(eachTask, props.listId);
+        onClickEdit(eachTask, listId);
       }}
     >
+
       {eachTask.title}
     </button>
   ));
@@ -28,8 +37,9 @@ function ListDetails(props) {
         type="button"
         className="add-task"
         onClick={() => {
-          props.setEditTask('');
-          props.navigate('/tasks');
+          setEditTask('');
+          navigate('/tasks');
+          // navigate('/tasks');
         }}
       >
         CREATE TASK
@@ -37,7 +47,7 @@ function ListDetails(props) {
       <br />
       <br />
       <div className="task-container">
-        <h1>{props.tasks.name}</h1>
+        <h1>{tasks.name}</h1>
         <div className="task-items">
           {TaskItems}
         </div>
@@ -47,7 +57,7 @@ function ListDetails(props) {
       <button
         type="button"
         onClick={() => {
-          props.navigate('/view-lists');
+          navigate('/view-lists');
         }}
       >
         View Lists
@@ -55,4 +65,26 @@ function ListDetails(props) {
     </div>
   );
 }
+ListDetails.propTypes = {
+  setEditTask: PropTypes.func,
+  setTaskFunction: PropTypes.func,
+  tasks: PropTypes.shape({
+    id: PropTypes.number,
+    name: PropTypes.string,
+    tasks: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number,
+      title: PropTypes.string,
+      createdAt: PropTypes.string,
+      updatedAt: PropTypes.string,
+      listId: PropTypes.number,
+    })),
+  }),
+  listId: PropTypes.number,
+};
+ListDetails.defaultProps = {
+  setEditTask: () => {},
+  setTaskFunction: () => {},
+  tasks: {},
+  listId: 1,
+};
 export default ListDetails;
