@@ -11,7 +11,7 @@ const AllLists=(props)=>{
        return (
        
           
-           <button type="button" key={eachList.id} className='list-item' onClick={()=>{
+           <button type="button"  className='list-item' onClick={()=>{
              props.onClickList(eachList)
            }}>{eachList.name}</button>
           

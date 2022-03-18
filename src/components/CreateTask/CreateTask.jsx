@@ -1,7 +1,49 @@
 import {useState} from 'react';
 import './CreateTask.css'
+
+import {addNewListDB,addNewTaskDB,updateTaskDB} from '../../utils/backend/backend.utils'
+import {getItemBasedOnId} from '../../utils/common/common'
+import { useNavigate } from 'react-router-dom';
 const CreateTask=(props)=>{
 // console.log(props)
+const navigate=useNavigate();
+
+const onCreateTask = (newListData,listId) => {
+    addNewTaskDB(newListData,listId).then((response)=>{
+      console.log(response);
+      const newList={
+       name:getItemBasedOnId(props.listsData,listId).name,
+       id: getItemBasedOnId(props.listsData,listId).id,
+       tasks: [...props.taskItems.tasks, response]
+    }
+    const newLists= props.listsData.map((eachList,index)=>{
+     if(index===listId-1)
+     {
+       return newList;
+     }
+     else
+     {
+       return eachList;
+     }
+  })
+ props.setTaskItems(newList);
+ props.setList(newLists);
+ navigate('/lists')
+
+    })
+
+  };
+  const onCreateList = (newListData,listId) => {
+    console.log(newListData)
+    addNewListDB(newListData).then((response)=>{
+      const updatedList=[...props.listsData,response];
+      props.setTaskItems(response);
+      props.setList(updatedList);
+      
+      navigate('/view-lists')
+    })
+
+  };
     let selectedTitle;
     if(props.taskFunction==='edit')
     {
@@ -21,7 +63,7 @@ const CreateTask=(props)=>{
             name: enteredTask,
             tasks:[]
           };
-            props.onCreateList(newList)
+            onCreateList(newList)
             setEnteredTask("");
           
         }
@@ -39,7 +81,8 @@ const CreateTask=(props)=>{
         }
         else{
             
-            props.onCreateTask(newTask,props.listId)
+           // props.onCreateTask(newTask,props.listId)
+            onCreateTask(newTask,props.listId)
             setEnteredTask("");
         }
        // console.log(newTask)

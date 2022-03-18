@@ -102,9 +102,7 @@ const addNewListDB=async(newList)=>{
     console.log(newList)
     let updatedList= await makeRequest(addList({lists:newList.name}));
     console.log(updatedList);
-    updatedList.tasks=[];
-    Object.defineProperty(updatedList, 'id', Object.getOwnPropertyDescriptor(updatedList, 'id'));
-    delete updatedList['id'];                
+    updatedList.tasks=[];    
     return updatedList;
 }
 

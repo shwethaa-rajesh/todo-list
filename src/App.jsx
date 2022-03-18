@@ -223,34 +223,33 @@ function App() {
   const [taskItems, setTaskItems] = useState(INITIAL_DUMMY_LISTS[0]);
   const [editTask, setEditTask] = useState('');
   const [taskFunction,setTaskFunction]=useState('create');
-
   const [currentList,setCurrentList]=useState({});
 
-   const saveNewListData = (newListData,listId) => {
-     addNewTaskDB(newListData,listId).then((response)=>{
-       console.log(response);
-       const newList={
-        name:getItemBasedOnId(listsData,listId).name,
-        id: getItemBasedOnId(listsData,listId).id,
-        tasks: [...taskItems.tasks, response]
-     }
-     const newLists= listsData.map((eachList,index)=>{
-      if(index===listId-1)
-      {
-        return newList;
-      }
-      else
-      {
-        return eachList;
-      }
-   })
-  setTaskItems(newList);
-  setList(newLists);
-  navigate('/lists')
+  //  const saveNewListData = (newListData,listId) => {
+  //    addNewTaskDB(newListData,listId).then((response)=>{
+  //      console.log(response);
+  //      const newList={
+  //       name:getItemBasedOnId(listsData,listId).name,
+  //       id: getItemBasedOnId(listsData,listId).id,
+  //       tasks: [...taskItems.tasks, response]
+  //    }
+  //    const newLists= listsData.map((eachList,index)=>{
+  //     if(index===listId-1)
+  //     {
+  //       return newList;
+  //     }
+  //     else
+  //     {
+  //       return eachList;
+  //     }
+  //  })
+  // setTaskItems(newList);
+  // setList(newLists);
+  // navigate('/lists')
 
-     })
+  //    })
 
-   };
+  //  };
 
    const addNewList = (newListData,listId) => {
     console.log(newListData)
@@ -315,6 +314,7 @@ function App() {
    }
    const onClickList=(list)=>{
      console.log(listsData)
+     console.log(list)
      addTasksToLists(list.id,listsData).then((response)=>{
        setList(response)
        setCurrentList(getItemBasedOnId(response,list.id));
@@ -335,8 +335,8 @@ function App() {
       <Routes>
           <Route path='/view-lists' element={<AllLists lists={listsData} navigate={navigate} onClickList={onClickList} />}></Route>
           <Route path='/lists' element={<ListDetails tasks={taskItems} navigate={navigate} listId={currentList.id} onClickEdit={onClickEdit} setEditTask={setEditTask}  onCreateList={addNewList}/>}></Route>
-          <Route path='/add-list' element={<CreateTask onCreateList={addNewList} navigate={navigate} label="List"></CreateTask>}></Route>
-          <Route path='/tasks' element={<CreateTask label="Task" onCreateTask={saveNewListData} onEditList={editNewListData}  navigate={navigate} taskFunction={taskFunction} listId={currentList.id} task={editTask}></CreateTask> }></Route>
+          <Route path='/add-list' element={<CreateTask onCreateList={addNewList} navigate={navigate} label="List" listsData={listsData} setList={setList} taskItems={taskItems} setTaskItems={setTaskItems}></CreateTask>}></Route>
+          <Route path='/tasks' element={<CreateTask label="Task" listsData={listsData} setList={setList} onEditList={editNewListData} taskItems={taskItems} setTaskItems={setTaskItems} taskFunction={taskFunction} listId={currentList.id} task={editTask}></CreateTask> }></Route>
           <Route path='*' element={<div>Page not found</div>}></Route>
       </Routes>
   
